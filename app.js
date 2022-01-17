@@ -59,17 +59,26 @@ var upload = multer({ storage: storage });
 //=======================
 //      R O U T E S
 //=======================
+//THe standard call, which is like the entry point to the webpage
 app.get("/", (req,res) =>{
     res.render("login");
 })
-//app.get("/", (req,res) =>{
-//res.render("fuckoff");
-//})
 
+
+//This is just a little page, which is kinda useless, but exists
+
+/*	app.get("/", (req,res) =>{
+	res.render("fuckoff");
+	})
+*/
+
+
+//the homepage, in which you can go to whereever you want to
 app.get("/home",isLoggedIn ,(req,res) => {
     res.render("home");
 })
 
+//This is the creatEntries get handler, which get you the create Entry page. This handler gets called most of the time(for the createEntries page)
 app.get('/createEntries', isLoggedIn, (req, res) => {
 	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
@@ -83,7 +92,7 @@ app.get('/createEntries', isLoggedIn, (req, res) => {
 		}
 	});
 });
-
+//This is the post method for creating an entry to the db, however it doesnt write the user into it, so a normal user isnt going to see any Data
 app.post('/', upload.single('Entry'), (req, res, next) => {
 
 	var obj = {
@@ -102,7 +111,7 @@ app.post('/', upload.single('Entry'), (req, res, next) => {
 	});
 });
 
-
+//this is the page to show the createEntries Page, which never gets called, but is here to stay away from runtime errors
 app.get('/', (req, res) => {
 	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
@@ -114,7 +123,7 @@ app.get('/', (req, res) => {
 		}
 	});
 });
-
+//this is the normal Show Page, which is shown to every user and only should show userspecific entriex
 app.get('/showEntries', (req, res) => {
 	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
@@ -126,6 +135,9 @@ app.get('/showEntries', (req, res) => {
 		}
 	});
 });
+
+
+//The Adminpage, which only will render, if your signed in account is admin
 app.get('/showEntriesAdmin', (req, res) => {
 	if(User.IsAdmin){
 
@@ -149,7 +161,8 @@ app.get('/showEntriesAdmin', (req, res) => {
 app.get("/login",(req,res)=>{
     res.render("login");
 });
-
+//The Login Post
+//Uses Passport functions to easily authenticate users and then redirects them
 app.post("/login",passport.authenticate("local",{
     successRedirect:"/home",
     failureRedirect:"/login"
@@ -165,8 +178,9 @@ app.get("/register",(req,res)=>{
     res.render("register");
 });
 
+//register a new User
 app.post("/register",(req,res)=>{
-    
+    //					The Username(no requirements) The Mail(needs to be valid mail) Phone(Is Number) Admin is initially false and meant to be changed in db directly
     User.register(new User({username: req.body.username,email:req.body.phone,phone: req.body.telephone, IsAdmin: false}),req.body.password,function(err,user){
         if(err){
             console.log(err);
@@ -186,7 +200,7 @@ app.get("/logout",(req,res)=>{
     req.logout();
     res.redirect("/");
 });
-
+//This Function verifies the users authentication and will throw you out of the app
 function isLoggedIn(req,res,next) {
     if(req.isAuthenticated()){
         return next();
@@ -194,6 +208,8 @@ function isLoggedIn(req,res,next) {
     res.redirect("/login");
 }
 
+//Writes logged in and logged out into the log
+//Also Formats the text and records the Date
 function writeToLog(txt, usr) {
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
