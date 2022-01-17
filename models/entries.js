@@ -5,7 +5,7 @@ var EntrySchema = new mongoose.Schema({
 	title: String,
 	desc: String,
 	date: Date,
-	User: String,
+	Usaname: String,
 });
 
 module.exports = mongoose.model('Entry', EntrySchema);

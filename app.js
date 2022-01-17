@@ -1,3 +1,4 @@
+//Getting all the libraries
 const express               =  require('express'),
       app                   =  express(),
       mongoose              =  require("mongoose"),
@@ -13,12 +14,13 @@ require('dotenv/config');
 var fs = require('fs');
 var path = require('path');
 
-//Connecting database
+//Connecting to database with the Mongourl form the environment file
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
 	console.log('connected to ' + process.env.MONGO_URL)
     mongoose.use
 });
 
+//create the express Sessions
 app.use(require("express-session")({
     secret:"password",       //decode or encode session
     resave: false,          
@@ -33,9 +35,8 @@ app.use(bodyParser.urlencoded(
       { extended:true }
 ))
 
-//app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+//using passport to verify the user
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -70,7 +71,7 @@ app.get("/home",isLoggedIn ,(req,res) => {
 })
 
 app.get('/createEntries', isLoggedIn, (req, res) => {
-	EntryModel.find({}, (err, items) => {
+	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
 			//console.log('storing ERROR')
 			console.log(err);
@@ -89,15 +90,13 @@ app.post('/', upload.single('Entry'), (req, res, next) => {
 		title: req.body.title,
 		desc: req.body.desc,
 		date: req.body.date,
-		user: req.user.username,
+		Usaname: req.user.username,
 	}
 	EntryModel.create(obj, (err, item) => {
 		if (err) {
 			console.log(err);
 		}
 		else {
-			// item.save();
-			//res.redirect('/');
 			res.redirect('createEntries');
 		}
 	});
@@ -105,7 +104,7 @@ app.post('/', upload.single('Entry'), (req, res, next) => {
 
 
 app.get('/', (req, res) => {
-	EntryModel.find({}, (err, items) => {
+	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
     		console.log(err);
 			res.status(500).send('An error occurred', err);
@@ -117,7 +116,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/showEntries', (req, res) => {
-	EntryModel.find({}, (err, items) => {
+	EntryModel.find({Usaname: req.body.username}, (err, items) => {
 		if (err) {
 			console.log(err);
 			res.status(500).send('An error occurred', err);
@@ -126,6 +125,21 @@ app.get('/showEntries', (req, res) => {
 			res.render('showEntries', { items: items });
 		}
 	});
+});
+app.get('/showEntriesAdmin', (req, res) => {
+	if(User.IsAdmin){
+
+	
+	EntryModel.find({}, (err, items) => {
+		if (err) {
+			console.log(err);
+			res.status(500).send('An error occurred', err);
+		}
+		else {
+			res.render('showEntriesAdmin', { items: items });
+		}
+	});
+}
 });
 
 //Auth Routes
@@ -153,7 +167,7 @@ app.get("/register",(req,res)=>{
 
 app.post("/register",(req,res)=>{
     
-    User.register(new User({username: req.body.username,email:req.body.phone,phone: req.body.telephone}),req.body.password,function(err,user){
+    User.register(new User({username: req.body.username,email:req.body.phone,phone: req.body.telephone, IsAdmin: false}),req.body.password,function(err,user){
         if(err){
             console.log(err);
             res.render("register");
@@ -179,6 +193,7 @@ function isLoggedIn(req,res,next) {
     }
     res.redirect("/login");
 }
+
 function writeToLog(txt, usr) {
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);

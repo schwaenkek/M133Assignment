@@ -2,3 +2,7 @@
  User mauro logged registered successfully.
 ----------------------------------------
 
+------Mon, 17 Jan 2022 16:46:51 GMT-----
+ User assa logged registered successfully.
+----------------------------------------
+
