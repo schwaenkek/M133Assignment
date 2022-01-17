@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:D</title>
+    <link rel="stylesheet" href="views/style.css">
+</head>
+<body>
+    <h1>
+		Your Entries
+	</h1>
+	<div>
+		<% items.forEach(function(Entries) { 
+			%>
+		<div>
+			<div>
+				<div>
+					<p><%= Entries.title %></p>
+					<p><%= Entries.desc %></p>
+					<p><%= Entries.date %></p>
+					
+				</div>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+	<div>
+		<p><a href="/createEntries">Create an Entry</a><br></p>
+		<p><a href="/logout">Logout</a></p>
+	</div>
+
+
+	<div>
+		<input type="button" onclick="location.href='/';" value="Index page" />
+	</div>
+
+
+</body>
+</html>

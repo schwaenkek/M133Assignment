@@ -1,0 +1,4 @@
+------Mon, 17 Jan 2022 15:05:02 GMT-----
+ User mauro logged registered successfully.
+----------------------------------------
+

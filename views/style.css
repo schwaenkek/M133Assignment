@@ -1,0 +1,39 @@
+h1 {
+    text-align: center;
+    font-family:'Courier New';
+}
+
+div {
+    background-color: 009900;
+    margin: 2px;
+    font-family:'Courier New';
+    font-size: 25px;
+    text-align: center;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    font-family:'Courier New';
+}
+form {
+    align-self: center;
+}
+.SideNav{
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 20%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: rgb(37, 200, 22); /* Green */
+    overflow-x: hidden; 
+}
+.shet{
+    font-size: 0.5rem;
+}
+body{
+    background-color: aquamarine;
+}
+.fuckoff{
+    font-size: 200px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Image Uploading</title>
+	<link rel="stylesheet" href="/views/style.css">
+</head>
+<body>
+	<h1>
+		Create An Entry to your Calendar
+	</h1>
+	<hr>
+	<div>
+		<form action="/" method="POST" enctype="multipart/form-data">
+			<div>
+				<label for="title">Entry Title</label>
+				<input type="text" id="title" placeholder="title"
+					value="" name="title" required>
+			</div>
+			<br>
+			<div>
+				<label for="desc">Description</label>
+				<textarea id="desc" name="desc" value="" rows="2"
+						placeholder="Description" required>
+				</textarea>
+			</div>
+			<br>
+			<div>
+				<label for="Date">Date</label>
+				<input type="date" id="date"
+					name="date" value="" required>
+			</div>
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+
+	<hr>
+
+	<h1>
+		Created Entries
+	</h1>
+	<div>
+
+		<input type="button" onclick="location.href='/showEntries';" value="Entries in DB" />
+	</div>
+</body>
+
+</html>

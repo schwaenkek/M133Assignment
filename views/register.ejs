@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/views/style.css">
+</head>
+<body>
+    <h1>
+        Register Page
+    </h1>
+    <div>
+    <form action="/register" method="POST">            
+            <label for="username">User Name</label>
+            <input type="text" id="username" name="username"> <br>        
+
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password"><br>
+            
+              <label for="phone">phone</label>
+              <input type="number" name="phone" id="phone">  <br>
+              
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email"><br>
+ 
+        <div class="submit">
+            <button>Submit</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <div>
+        <p>Password needs to be Strong(1 number, 1 letter, 1 special character)</p>
+        <a href="/login">login</a>
+    </div>
+
+</body>
+</html>
